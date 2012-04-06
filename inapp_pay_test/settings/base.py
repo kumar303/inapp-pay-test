@@ -3,6 +3,20 @@
 
 from funfactory.settings_base import *
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'inapp_pay_test.db',
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': '',
+        'PORT': '',
+        'OPTIONS': {},
+        'TEST_CHARSET': 'utf8',
+        'TEST_COLLATION': 'utf8_general_ci',
+    },
+}
+
 # Bundles is a dictionary of two dictionaries, css and js, which list css files
 # and js files that can be bundled together by the minify app.
 MINIFY_BUNDLES = {
@@ -13,12 +27,19 @@ MINIFY_BUNDLES = {
         'example_mobile_css': (
             'css/examples/mobile.css',
         ),
+        'app_payments': (
+            'css/app_payments/base.css',
+        ),
     },
     'js': {
         'example_js': (
             'js/examples/libs/jquery-1.4.4.min.js',
             'js/examples/libs/jquery.cookie.js',
             'js/examples/init.js',
+        ),
+        'app_payments': (
+            'js/libs/jquery-1.4.4.min.js',
+            'js/app_payments.js',
         ),
     }
 }
@@ -29,8 +50,9 @@ ROOT_URLCONF = 'inapp_pay_test.urls'
 INSTALLED_APPS = list(INSTALLED_APPS) + [
     # Application base, containing global templates.
     'inapp_pay_test.base',
-    # Example code. Can (and should) be removed for actual projects.
-    'inapp_pay_test.examples',
+    'inapp_pay_test.app_payments',
+
+    'django.contrib.admin',
 ]
 
 
@@ -56,4 +78,19 @@ JINGO_EXCLUDE_APPS = [
 #    ('media/js/**.js', 'javascript'),
 # ]
 
-LOGGING = dict(loggers=dict(playdoh = {'level': logging.DEBUG}))
+LOGGIN = {'loggers': {'playdoh': {'level': logging.DEBUG}}}
+
+# URL to the JS file for the app to include to make in-app payments.
+# By default this is the local reference implementation.
+INAPP_PAYMENTS_JS = 'https://marketplace-dev-cdn.allizom.org/media/js/mozmarket.js'
+
+# After registering an app for in-app payments
+# on https://marketplace.mozilla.org/
+# fill these in from the Manage In-app Payments screen.
+#
+# set these in settings/local.py
+#
+# **DO NOT** commit your app secret to github :)
+#
+APPLICATION_KEY = '<from marketplace.mozilla.org>'
+APPLICATION_SECRET = '<from marketplace.mozilla.org>'

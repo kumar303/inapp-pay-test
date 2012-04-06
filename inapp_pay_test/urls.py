@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.conf.urls.defaults import *
 
-from .examples import urls
+from .app_payments import urls
 
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin

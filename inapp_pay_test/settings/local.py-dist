@@ -5,27 +5,6 @@
 #from . import base
 #INSTALLED_APPS = base.INSTALLED_APPS + ['debug_toolbar']
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'playdoh_app',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': '',
-        'PORT': '',
-        'OPTIONS': {
-            'init_command': 'SET storage_engine=InnoDB',
-            'charset' : 'utf8',
-            'use_unicode' : True,
-        },
-        'TEST_CHARSET': 'utf8',
-        'TEST_COLLATION': 'utf8_general_ci',
-    },
-    # 'slave': {
-    #     ...
-    # },
-}
-
 # Uncomment this and set to all slave DBs in use on the site.
 # SLAVE_DATABASES = ['slave']
 
@@ -71,3 +50,10 @@ SECRET_KEY = ''
 # Common Event Format logging parameters
 #CEF_PRODUCT = 'Playdoh'
 #CEF_VENDOR = 'Mozilla'
+
+
+# After registering an app for in-app payments
+# on https://marketplace.mozilla.org/
+# fill these in from the Manage In-app Payments screen.
+APPLICATION_KEY = '<from marketplace.mozilla.org>'
+APPLICATION_SECRET = '<from marketplace.mozilla.org>'

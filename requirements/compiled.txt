@@ -1,1 +1,4 @@
 -r ../vendor/src/funfactory/funfactory/requirements/compiled.txt
+
+# For JWT
+M2Crypto>=0.20.0

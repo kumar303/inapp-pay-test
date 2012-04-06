@@ -1,0 +1,70 @@
+/* swiped from github's default gh-pages styles */
+body {
+  margin-top: 1.0em;
+  background-color: #edeff8;
+  font-family: Helvetica, Arial, FreeSans, san-serif;
+  color: #000000;
+}
+#container {
+  margin: 0 auto;
+  width: 700px;
+}
+h1 { font-size: 3.8em; color: #121007; margin-bottom: 3px; }
+h1 .small { font-size: 0.4em; }
+h1 a { text-decoration: none }
+h2 { font-size: 1.5em; color: #121007; }
+h3 { text-align: center; color: #121007; }
+a { color: #121007; }
+.description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
+.download { float: right; }
+pre { background: #000; color: #fff; padding: 15px;}
+hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
+.footer { text-align:center; padding-top:30px; font-style: italic; }
+p { line-height: 1.4em; }
+
+#fork-me img {
+    position: absolute; top: 0; right: 0; border: 0;
+}
+
+/* app payments stuff */
+
+form textarea {
+    display: block;
+    height: 220px;
+    width: 500px;
+    padding: 10px;
+}
+
+form button {
+    font-size: 20px;
+    padding: 14px 24px;
+    text-align: center;
+    text-shadow: 0pt 1px 1px rgba(255, 255, 255, 0.75);
+    background-color: rgb(245, 245, 245);
+    background-image: -moz-linear-gradient(center top , rgb(255, 255, 255), rgb(230, 230, 230));
+    box-shadow: 0pt 1px 0pt rgba(255, 255, 255, 0.2) inset, 0pt 1px 2px rgba(0, 0, 0, 0.05);
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(179, 179, 179);
+    border-radius: 6px 6px 6px 6px;
+    cursor: pointer;
+}
+
+#call-buy {
+    margin-top: 1em;
+}
+
+#call-buy.ajax-loading {
+    background: transparent url(ajax-loader.gif) no-repeat 45% 13px;
+}
+
+#log pre {
+    display: none;
+    margin-top: 1em;
+    padding: 10px;
+    width: 600px;
+    border: 1px solid #fff;
+    font-family: monospace;
+    text-overflow: clip;
+    white-space: normal;
+}
