@@ -31,6 +31,13 @@ Before deployment, you also need to run this:
 
     python manage.py compress_assets
 
+
+To get your db set up in production, make sure the user of your web server
+(e.g. www-data) owns the *root directory* of your code, then run something
+like:
+
+    sudo -u www-data python ./manage.py syncdb
+
 Further Documentation
 =====================
 
