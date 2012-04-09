@@ -2,11 +2,12 @@
 # repo. If you need to override a setting locally, use settings_local.py
 
 from funfactory.settings_base import *
+import os
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'inapp_pay_test.db',
+        'NAME': os.path.join(os.path.dirname(__file__), 'inapp_pay_test.db'),
         'USER': '',
         'PASSWORD': '',
         'HOST': '',
