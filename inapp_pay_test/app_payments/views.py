@@ -14,7 +14,7 @@ import jwt
 from .decorators import post_required, json_view
 from .models import Transaction, TRANS_PENDING, TRANS_DONE
 
-log = commonware.log.getLogger(__name__)
+log = commonware.log.getLogger('inapp_pay_test')
 
 
 def home(request):

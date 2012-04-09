@@ -55,7 +55,7 @@ form button {
 }
 
 #call-buy.ajax-loading {
-    background: transparent url(ajax-loader.gif) no-repeat 45% 13px;
+    background: transparent url(/media/css/app_payments/ajax-loader.gif) no-repeat 45% 13px;
 }
 
 #log pre {
