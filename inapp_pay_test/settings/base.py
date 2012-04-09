@@ -7,7 +7,7 @@ import os
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(os.path.dirname(__file__), 'inapp_pay_test.db'),
+        'NAME': os.path.join(ROOT, 'inapp_pay_test.db'),
         'USER': '',
         'PASSWORD': '',
         'HOST': '',
