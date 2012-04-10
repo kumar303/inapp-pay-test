@@ -71,7 +71,7 @@ def sign_request(request):
             tx = 'transaction_id=%s' % trans.pk
             pay_request['request']['productdata'] = tx
             raw_pay_request = json.dumps(pay_request)
-        except (ValueError, KeyError):
+        except:
             log.exception('Invalid JSON, ignoring')
 
         signed = jwt.encode(raw_pay_request,
