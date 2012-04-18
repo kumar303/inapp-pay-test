@@ -1,6 +1,6 @@
 $(function() {
     'use strict';
-    var localTransID;
+    var localTransID, lastTransState;
 
     function consoleLog() {
         if (typeof console.log !== 'undefined') {
@@ -16,8 +16,8 @@ $(function() {
 
     function onBuySuccess() {
         log('mozmarket.buy() success!');
-        log('waiting for the postback...');
-        waitForPostback();
+        log('watching for a postback/chargeback...');
+        waitForTransChange();
     }
 
     function onBuyError() {
@@ -25,19 +25,36 @@ $(function() {
         $('#call-buy').removeClass('ajax-loading');
     }
 
-    function waitForPostback() {
+    function waitForTransChange() {
+        var state;
         $.ajax({
             url: '/en-US/check-trans',
             dataType: 'json',
             type: 'GET',
             data: {tx: localTransID},
             success: function(data) {
-                if (!data.mozTransactionID) {
-                    setTimeout(waitForPostback, 500);
-                    return;
+                if (data.mozTransactionID && data.transState != lastTransState) {
+                    lastTransState = data.transState;
+                    switch (data.transState) {
+                        case 1:
+                            state = 'pending';
+                            break;
+                        case 2:
+                            log('received postback');
+                            state = 'paid';
+                            break;
+                        case 3:
+                            log('received chargeback');
+                            state = 'reversed';
+                            break;
+                        default:
+                            state = 'UNKNOWN';
+                            break;
+                    }
+                    log('new transaction state: ' + state);
                 }
-                log('postback received');
-                $('#call-buy').removeClass('ajax-loading');
+                setTimeout(waitForTransChange, 5000);
+                // $('#call-buy').removeClass('ajax-loading');
             },
             error: function(xhr, textStatus, errorThrown) {
                 consoleLog('ERROR', xhr, textStatus, errorThrown);

@@ -12,7 +12,7 @@ import commonware
 import jwt
 
 from .decorators import post_required, json_view
-from .models import Transaction, TRANS_PENDING, TRANS_DONE
+from .models import Transaction, TRANS_PENDING, TRANS_DONE, TRANS_CHARGEBACK
 
 log = commonware.log.getLogger()
 
@@ -86,10 +86,19 @@ def sign_request(request):
 @post_required
 @csrf_exempt
 def mozmarket_postback(request):
+    return _change_trans_state(request, TRANS_DONE)
+
+
+@csrf_exempt
+def mozmarket_chargeback(request):
+    return _change_trans_state(request, TRANS_CHARGEBACK)
+
+
+def _change_trans_state(request, state):
     try:
         payload = request.read()
         data = jwt.decode(payload, verify=False)
-        log.info('Got postback payload: %s' % data)
+        log.info('Got postback/chargeback payload: %s' % data)
         jwt.decode(payload, settings.APPLICATION_SECRET, verify=True)
         moz_trans_id = data['response']['transactionID']
 
@@ -97,7 +106,9 @@ def mozmarket_postback(request):
         pd = urlparse.parse_qs(data['request']['productdata'])
         trans = Transaction.objects.get(pk=pd['transaction_id'][0])
         trans.moz_transaction_id = moz_trans_id
-        trans.state = TRANS_DONE
+        log.info('transaction %s changed from state %s to %s'
+                 % (trans.pk, trans.state, state))
+        trans.state = state
         trans.save()
 
         log.info('signature verified; responding with %s' % moz_trans_id)
@@ -108,13 +119,9 @@ def mozmarket_postback(request):
         raise
 
 
-@csrf_exempt
-def mozmarket_chargeback(request):
-    pass
-
-
 @json_view
 def check_trans(request):
     trans = get_object_or_404(Transaction, pk=request.GET.get('tx'))
     return {'localTransID': trans.pk,
-            'mozTransactionID': trans.moz_transaction_id}
+            'mozTransactionID': trans.moz_transaction_id,
+            'transState': trans.state}

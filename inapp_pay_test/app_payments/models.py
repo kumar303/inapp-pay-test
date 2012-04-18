@@ -14,8 +14,10 @@ class ModelBase(models.Model):
 
 TRANS_PENDING = 1
 TRANS_DONE = 2
+TRANS_CHARGEBACK = 3
 TRANS_STATE_CHOICES = {TRANS_PENDING: _lazy('pending'),
-                       TRANS_DONE: _lazy('done')}
+                       TRANS_DONE: _lazy('done'),
+                       TRANS_DONE: _lazy('chargeback')}
 
 
 class Transaction(ModelBase):
