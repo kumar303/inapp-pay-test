@@ -57,3 +57,6 @@ SECRET_KEY = ''
 # fill these in from the Manage In-app Payments screen.
 APPLICATION_KEY = '<from marketplace.mozilla.org>'
 APPLICATION_SECRET = '<from marketplace.mozilla.org>'
+
+# To run against your local host, add something like this:
+#INAPP_PAYMENTS_JS = 'http://localhost:8001/en-US/inapp-pay/mozmarket.js'
