@@ -1,6 +1,11 @@
 In-app Payment Tester
 =====================
 
+This is an [open web app](https://developer.mozilla.org/en/Apps)
+that implements Mozilla's
+[in-app payment API](https://developer.mozilla.org/en/Apps/In-app_payments).
+It is used for diagnostics / testing in the Marketplace development cycle.
+
 Requirements:
 
 * Python 2.6 or greater
