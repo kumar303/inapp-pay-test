@@ -89,6 +89,7 @@ def mozmarket_postback(request):
     return _change_trans_state(request, TRANS_DONE)
 
 
+@post_required
 @csrf_exempt
 def mozmarket_chargeback(request):
     return _change_trans_state(request, TRANS_CHARGEBACK)

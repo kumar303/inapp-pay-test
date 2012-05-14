@@ -44,11 +44,11 @@ You'll come to a screen where you can set up the postback and chargeback URLs.
 
 Postback URL:
 
-    /en-US/postback
+    /postback
 
 Chargeback URL:
 
-    /en-US/chargeback
+    /chargeback
 
 That will give you an application ID and an application secret.
 Enter those in your `inapp_pay_test/settings/local.py` config, which is not

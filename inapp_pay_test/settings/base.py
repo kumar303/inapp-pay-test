@@ -79,6 +79,15 @@ JINGO_EXCLUDE_APPS = [
 #    ('media/js/**.js', 'javascript'),
 # ]
 
+# Paths that don't require a locale code in the URL.
+SUPPORTED_NONLOCALES = [
+    'media',
+    'admin',
+    'manifest.webapp',
+    'postback',
+    'chargeback',
+]
+
 LOGGIN = {'loggers': {'playdoh': {'level': logging.DEBUG}}}
 
 # URL to the JS file for the app to include to make in-app payments.
