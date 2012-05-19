@@ -1,5 +1,7 @@
 from django.conf.urls.defaults import *
 
+from moz_inapp_pay.djangoapp import views as moz_views
+
 from . import views
 
 
@@ -9,8 +11,8 @@ urlpatterns = patterns('',
         name='app_payments.sign_request'),
     url(r'^manifest\.webapp$', views.manifest, name='app_payments.manifest'),
     url(r'^check-trans$', views.check_trans, name='app.check_trans'),
-    url(r'^postback$', views.mozmarket_postback,
+    url(r'^postback$', moz_views.postback,
         name='app.mozmarket_postback'),
-    url(r'^chargeback$', views.mozmarket_chargeback,
+    url(r'^chargeback$', moz_views.chargeback,
         name='app.mozmarket_chargeback'),
 )

@@ -52,8 +52,13 @@ INSTALLED_APPS = list(INSTALLED_APPS) + [
     # Application base, containing global templates.
     'inapp_pay_test.base',
     'inapp_pay_test.app_payments',
+    'moz_inapp_pay.djangoapp',
 
     'django.contrib.admin',
+]
+
+MIDDLEWARE_CLASSES = list(MIDDLEWARE_CLASSES) + [
+    'inapp_pay_test.base.middleware.LogExceptionsMiddleware'
 ]
 
 
@@ -88,7 +93,10 @@ SUPPORTED_NONLOCALES = [
     'chargeback',
 ]
 
-LOGGIN = {'loggers': {'playdoh': {'level': logging.DEBUG}}}
+LOGGING = {'loggers': {'playdoh': {'level': logging.INFO,
+                                   'handlers': ['console']},
+                       'moz_inapp_pay': {'level': logging.DEBUG,
+                                         'handlers': ['console']}}}
 
 # URL to the JS file for the app to include to make in-app payments.
 # By default this is the local reference implementation.
@@ -102,5 +110,5 @@ INAPP_PAYMENTS_JS = 'https://marketplace-dev-cdn.allizom.org/media/js/mozmarket.
 #
 # **DO NOT** commit your app secret to github :)
 #
-APPLICATION_KEY = '<from marketplace.mozilla.org>'
-APPLICATION_SECRET = '<from marketplace.mozilla.org>'
+MOZ_APP_KEY = '<from marketplace.mozilla.org>'
+MOZ_APP_SECRET = '<from marketplace.mozilla.org>'

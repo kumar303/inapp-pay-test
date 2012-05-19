@@ -1,9 +1,7 @@
 import calendar
 import json
 import time
-import urlparse
 
-from django import http
 from django.conf import settings
 from django.shortcuts import render, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
@@ -12,7 +10,7 @@ import commonware
 import jwt
 
 from .decorators import post_required, json_view
-from .models import Transaction, TRANS_PENDING, TRANS_DONE, TRANS_CHARGEBACK
+from .models import Transaction, TRANS_PENDING
 
 log = commonware.log.getLogger()
 
@@ -21,7 +19,7 @@ def home(request):
     iat = calendar.timegm(time.gmtime())
     exp = iat + 3600  # expires in 1 hour
     pay_request = json.dumps({
-        'iss': settings.APPLICATION_KEY,
+        'iss': settings.MOZ_APP_KEY,
         'aud': 'marketplace.mozilla.org',
         'typ': 'mozilla/payments/pay/v1',
         'exp': exp,
@@ -75,48 +73,11 @@ def sign_request(request):
             log.exception('Invalid JSON, ignoring')
 
         signed = jwt.encode(raw_pay_request,
-                            settings.APPLICATION_SECRET, algorithm='HS256')
+                            settings.MOZ_APP_SECRET, algorithm='HS256')
         return {'localTransID': trans and trans.pk,
                 'signedRequest': signed}
     except:
         log.exception('in sign_request()')
-        raise
-
-
-@post_required
-@csrf_exempt
-def mozmarket_postback(request):
-    return _change_trans_state(request, TRANS_DONE)
-
-
-@post_required
-@csrf_exempt
-def mozmarket_chargeback(request):
-    return _change_trans_state(request, TRANS_CHARGEBACK)
-
-
-def _change_trans_state(request, state):
-    try:
-        payload = request.read()
-        data = jwt.decode(payload, verify=False)
-        log.info('Got postback/chargeback payload: %s' % data)
-        jwt.decode(payload, settings.APPLICATION_SECRET, verify=True)
-        moz_trans_id = data['response']['transactionID']
-
-        # e.g. transaction_id=1234
-        pd = urlparse.parse_qs(data['request']['productdata'])
-        trans = Transaction.objects.get(pk=pd['transaction_id'][0])
-        trans.moz_transaction_id = moz_trans_id
-        log.info('transaction %s changed from state %s to %s'
-                 % (trans.pk, trans.state, state))
-        trans.state = state
-        trans.save()
-
-        log.info('signature verified; responding with %s' % moz_trans_id)
-        return http.HttpResponse(str(moz_trans_id))
-    except:
-        log.exception('Exception while processing request from %s'
-                      % request.META.get('REMOTE_ADDR'))
         raise
 
 
