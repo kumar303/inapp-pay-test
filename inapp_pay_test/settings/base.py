@@ -100,7 +100,7 @@ LOGGING = {'loggers': {'playdoh': {'level': logging.INFO,
 
 # URL to the JS file for the app to include to make in-app payments.
 # By default this is the local reference implementation.
-INAPP_PAYMENTS_JS = 'https://marketplace-dev-cdn.allizom.org/media/js/mozmarket.js'
+INAPP_PAYMENTS_JS = 'https://marketplace-dev-cdn.allizom.org/mozmarket.js'
 
 # After registering an app for in-app payments
 # on https://marketplace.mozilla.org/

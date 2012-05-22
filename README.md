@@ -39,7 +39,7 @@ version). This is the manifest URL:
 
     http://127.0.0.1:8000/manifest.webapp
 
-Captain Obvious says choose the option called "premium app with in-app payments."
+Choose the option called "free app with in-app payments."
 You'll come to a screen where you can set up the postback and chargeback URLs.
 
 Postback URL:
@@ -54,8 +54,12 @@ That will give you an application ID and an application secret.
 Enter those in your `inapp_pay_test/settings/local.py` config, which is not
 committed to git. Something like:
 
-    APPLICATION_KEY = 'ZPLUZMDMUBIP9W687BWF'
-    APPLICATION_SECRET = 'VpuV67JDd6Q6cvRhWMGW1K2ZHJSp0kicKs0gpF1qHVM'
+    MOZ_APP_KEY = 'ZPLUZMDMUBIP9W687BWF'
+    MOZ_APP_SECRET = 'VpuV67JDd6Q6cvRhWMGW1K2ZHJSp0kicKs0gpF1qHVM'
+
+To use the JS shim hosted on a development install of the marketplace, set this:
+
+    INAPP_PAYMENTS_JS = 'http://localhost:8001/mozmarket.js'
 
 Deployment
 ==========
