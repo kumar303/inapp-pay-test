@@ -67,6 +67,7 @@ $(function() {
         $('#call-buy').addClass('ajax-loading');
         $('#pay-request').hide();
         $('#start-over').show();
+        var request = mozmarket.buy(onBuySuccess, onBuyError);
         log("generating a signed JWT request...");
         $.ajax({
             url: '/en-US/sign-request',
@@ -76,7 +77,7 @@ $(function() {
             success: function(data) {
                 localTransID = data.localTransID;
                 log('mozmarket.buy("' + data.signedRequest + '", onBuySuccess, onBuyError);');
-                mozmarket.buy(data.signedRequest, onBuySuccess, onBuyError);
+                request.sign(data.signedRequest);
             },
             error: function(xhr, textStatus, errorThrown) {
                 consoleLog('ERROR', xhr, textStatus, errorThrown);
