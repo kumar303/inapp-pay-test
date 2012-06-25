@@ -32,8 +32,7 @@ TRANS_STATE_CHOICES = {TRANS_PENDING: _lazy('pending'),
 class Transaction(ModelBase):
     moz_transaction_id = models.IntegerField(blank=True, null=True)
     product = models.CharField(max_length=100)
-    currency = models.CharField(max_length=3)
-    price = models.DecimalField(max_digits=9, decimal_places=2)
+    price_tier = models.IntegerField()
     description = models.CharField(max_length=255, blank=True)
     state = models.IntegerField(choices=TRANS_STATE_CHOICES.items())
 

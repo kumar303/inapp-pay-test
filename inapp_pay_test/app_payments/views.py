@@ -25,8 +25,7 @@ def home(request):
         'exp': exp,
         'iat': iat,
         'request': {
-            'price': '0.99',
-            'currency': 'USD',
+            'priceTier': 1,
             'name': 'The Product',
             'description': 'detailed description',
             'productdata': '<set to local transaction ID>'
@@ -63,8 +62,7 @@ def sign_request(request):
             trans = Transaction.objects.create(
                         state=TRANS_PENDING,
                         product=pay_request['request']['name'],
-                        price=pay_request['request']['price'],
-                        currency=pay_request['request']['currency'],
+                        price_tier=pay_request['request']['priceTier'],
                         description=pay_request['request']['description'])
             tx = 'transaction_id=%s' % trans.pk
             pay_request['request']['productdata'] = tx
