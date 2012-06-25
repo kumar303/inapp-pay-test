@@ -3,7 +3,7 @@ import urlparse
 from django.dispatch import receiver
 from django.db import models
 
-import commonware
+import commonware.log
 from moz_inapp_pay.djangoapp.signals import (moz_inapp_postback,
                                              moz_inapp_chargeback)
 from tower import ugettext_lazy as _lazy
