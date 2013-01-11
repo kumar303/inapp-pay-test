@@ -1,4 +1,2 @@
--r ../vendor/src/funfactory/funfactory/requirements/compiled.txt
-
-# For JWT
+Jinja2==2.6
 M2Crypto>=0.20.0

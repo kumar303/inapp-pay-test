@@ -18,6 +18,11 @@ DATABASES = {
     },
 }
 
+# URL that handles the media served from MEDIA_ROOT. Make sure to use a
+# trailing slash if there is a path component (optional in other cases).
+# Examples: "http://media.lawrence.com", "http://example.com/media/"
+MEDIA_URL = '/media/'
+
 # Bundles is a dictionary of two dictionaries, css and js, which list css files
 # and js files that can be bundled together by the minify app.
 MINIFY_BUNDLES = {
@@ -45,6 +50,19 @@ MINIFY_BUNDLES = {
     }
 }
 
+# jingo-minify: Style sheet media attribute default
+CSS_MEDIA_DEFAULT = 'all'
+
+# Tell jingo-minify to use the media URL instead.
+JINGO_MINIFY_USE_STATIC = False
+
+# LESS CSS OPTIONS (Debug only)
+LESS_PREPROCESS = False  # Compile LESS with Node, rather than client-side JS?
+LESS_LIVE_REFRESH = False  # Refresh the CSS on save?
+LESS_BIN = 'lessc'
+UGLIFY_BIN = 'uglifyjs'
+CLEANCSS_BIN = 'cleancss'
+
 # Defines the views served for root URLs.
 ROOT_URLCONF = 'inapp_pay_test.urls'
 
@@ -57,9 +75,19 @@ INSTALLED_APPS = list(INSTALLED_APPS) + [
     'django.contrib.admin',
 ]
 
-MIDDLEWARE_CLASSES = list(MIDDLEWARE_CLASSES) + [
+MIDDLEWARE_CLASSES = (
+    'inapp_pay_test.base.middleware.LocaleMiddleware',
+    'multidb.middleware.PinningRouterMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'session_csrf.CsrfMiddleware',  # Must be after auth middleware.
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'commonware.middleware.FrameOptionsHeader',
+    'mobility.middleware.DetectMobileMiddleware',
+    'mobility.middleware.XMobileMiddleware',
     'inapp_pay_test.base.middleware.LogExceptionsMiddleware'
-]
+)
 
 
 # Because Jinja2 is the default template loader, add any non-Jinja templated

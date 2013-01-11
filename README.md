@@ -8,16 +8,16 @@ It is used for diagnostics / testing in the Marketplace development cycle.
 
 Requirements:
 
-* Python 2.6 or greater
+* Python 2.7 or greater
 * swig (to build m2crypto)
 
 Installation:
 
-    git clone --recursive git://github.com/kumar303/inapp-pay-test.git
+    git clone git://github.com/kumar303/inapp-pay-test.git
     cd inapp-pay-test
     virtualenv Env
     source Env/bin/activate
-    pip install -r requirements/compiled.txt
+    pip install --no-deps --exists-action=w -r requirements/dev.txt
     cp inapp_pay_test/settings/local.py-dist inapp_pay_test/settings/local.py
     python manage.py syncdb
     python manage.py runserver
