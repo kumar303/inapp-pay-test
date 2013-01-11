@@ -3,12 +3,14 @@ import json
 import time
 
 from django.conf import settings
+from django.core.urlresolvers import reverse
 from django.shortcuts import render, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 
 import commonware
 import jwt
 
+from inapp_pay_test.base.helpers import absolutify
 from .decorators import post_required, json_view
 from .models import Transaction, TRANS_PENDING
 
@@ -25,10 +27,13 @@ def home(request):
         'exp': exp,
         'iat': iat,
         'request': {
-            'priceTier': 1,
+            'pricePoint': 1,
+            'id': 'inapp_pay_test:1',
             'name': 'The Product',
             'description': 'detailed description',
-            'productdata': '<set to local transaction ID>'
+            'productdata': '<this is not editable>',
+            'chargebackURL': '<this is not editable>',
+            'postbackURL': '<this is not editable>'
         }
     }, indent=2)
     return render(request, 'app_payments/home.html',
@@ -62,10 +67,17 @@ def sign_request(request):
             trans = Transaction.objects.create(
                         state=TRANS_PENDING,
                         product=pay_request['request']['name'],
-                        price_tier=pay_request['request']['priceTier'],
+                        price_tier=pay_request['request']['pricePoint'],
                         description=pay_request['request']['description'])
+
+            # Fix up the JWT.
             tx = 'transaction_id=%s' % trans.pk
             pay_request['request']['productdata'] = tx
+            cb = absolutify(reverse('app.mozmarket_chargeback'))
+            pay_request['request']['chargebackURL'] = cb
+            cb = absolutify(reverse('app.mozmarket_postback'))
+            pay_request['request']['postbackURL'] = cb
+
             raw_pay_request = json.dumps(pay_request)
         except:
             log.exception('Invalid JSON, ignoring')

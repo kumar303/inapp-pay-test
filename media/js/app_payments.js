@@ -2,26 +2,20 @@ $(function() {
     'use strict';
     var localTransID, lastTransState;
 
-    function consoleLog() {
-        if (typeof console.log !== 'undefined') {
-            console.log.apply(this, arguments);
-        }
-    }
-
     function log(msg) {
-        // consoleLog(msg);
+        // console.log(msg);
         var $log = $("#log pre");
         $log.show().html($log.html() + msg.toString() + "<br>");
     }
 
     function onBuySuccess() {
-        log('mozmarket.buy() success!');
+        log('navigator.mozPay() success!');
         log('watching for a postback/chargeback...');
         waitForTransChange();
     }
 
     function onBuyError() {
-        log('mozmarket.buy() error!');
+        log('navigator.mozPay() error!');
         $('#call-buy').removeClass('ajax-loading');
     }
 
@@ -57,7 +51,7 @@ $(function() {
                 // $('#call-buy').removeClass('ajax-loading');
             },
             error: function(xhr, textStatus, errorThrown) {
-                consoleLog('ERROR', xhr, textStatus, errorThrown);
+                console.log('ERROR', xhr, textStatus, errorThrown);
             }
         });
     }
@@ -67,30 +61,21 @@ $(function() {
         $('#call-buy').addClass('ajax-loading');
         $('#pay-request').hide();
         $('#start-over').show();
-        var request = mozmarket.buy(onBuySuccess, onBuyError);
         log("generating a signed JWT request...");
         $.ajax({
-            url: '/en-US/sign-request',
+            url: $('body').data('sign-url'),
             dataType: 'json',
             type: 'POST',
             data: $('#generator form').serialize(),
             success: function(data) {
                 localTransID = data.localTransID;
-                log('mozmarket.buy("' + data.signedRequest + '", onBuySuccess, onBuyError);');
-                request.sign(data.signedRequest);
+                log('navigator.mozPay("' + data.signedRequest + '", onBuySuccess, onBuyError);');
+                navigator.mozPay(data.signedRequest, onBuySuccess, onBuyError);
             },
             error: function(xhr, textStatus, errorThrown) {
-                consoleLog('ERROR', xhr, textStatus, errorThrown);
+                console.log('ERROR', xhr, textStatus, errorThrown);
             }
         });
-    });
-
-    $('#start-over').hide().click(function(e) {
-        e.preventDefault();
-        $('#pay-request').show();
-        $('#start-over').hide();
-        $("#log pre").text('').hide();
-        $('#call-buy').removeClass('ajax-loading');
     });
 
 });

@@ -18,6 +18,9 @@ DATABASES = {
     },
 }
 
+# This must match what you see in your URL bar when you run the website.
+SITE_URL = 'http://localhost:8000'
+
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
