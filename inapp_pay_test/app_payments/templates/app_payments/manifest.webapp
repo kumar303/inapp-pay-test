@@ -4,4 +4,7 @@
  "developer": {"name": "Kumar McMillan"},
  "launch_path": "{{ url('app_payments.home') }}",
  "default_locale": "en",
+ "icons": {
+   "512": "{{ MEDIA_URL}}img/icon.png"
+  },
  "installs_allowed_from": ["*"]}
