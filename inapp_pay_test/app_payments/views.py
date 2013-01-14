@@ -61,7 +61,8 @@ def sign_request(request):
     #
     try:
         raw_pay_request = request.POST['pay_request']
-        pay_request = trans = None
+        pay_request = {}
+        trans = None
         try:
             pay_request = json.loads(raw_pay_request)
             trans = Transaction.objects.create(
@@ -77,12 +78,10 @@ def sign_request(request):
             pay_request['request']['chargebackURL'] = cb
             cb = absolutify(reverse('app.mozmarket_postback'))
             pay_request['request']['postbackURL'] = cb
-
-            raw_pay_request = json.dumps(pay_request)
         except:
             log.exception('Invalid JSON, ignoring')
 
-        signed = jwt.encode(raw_pay_request,
+        signed = jwt.encode(pay_request,
                             settings.MOZ_APP_SECRET, algorithm='HS256')
         return {'localTransID': trans and trans.pk,
                 'signedRequest': signed}
