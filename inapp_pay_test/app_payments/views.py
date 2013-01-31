@@ -31,7 +31,7 @@ def home(request):
             'id': 'inapp_pay_test:1',
             'name': 'The Product',
             'description': 'detailed description',
-            'productdata': '<this is not editable>',
+            'productData': '<this is not editable>',
             'chargebackURL': '<this is not editable>',
             'postbackURL': '<this is not editable>'
         }
@@ -73,7 +73,7 @@ def sign_request(request):
 
             # Fix up the JWT.
             tx = 'transaction_id=%s' % trans.pk
-            pay_request['request']['productdata'] = tx
+            pay_request['request']['productData'] = tx
             cb = absolutify(reverse('app.mozmarket_chargeback'))
             pay_request['request']['chargebackURL'] = cb
             cb = absolutify(reverse('app.mozmarket_postback'))
