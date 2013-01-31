@@ -1,6 +1,7 @@
 import calendar
 import json
 import time
+import uuid
 
 from django.conf import settings
 from django.core.urlresolvers import reverse
@@ -28,7 +29,7 @@ def home(request):
         'iat': iat,
         'request': {
             'pricePoint': 1,
-            'id': 'inapp_pay_test:1',
+            'id': str(uuid.uuid4()),
             'name': 'The Product',
             'description': 'detailed description',
             'productData': '<this is not editable>',
