@@ -143,3 +143,5 @@ INAPP_PAYMENTS_JS = 'https://marketplace-dev-cdn.allizom.org/mozmarket.js'
 #
 MOZ_APP_KEY = '<from marketplace.mozilla.org>'
 MOZ_APP_SECRET = '<from marketplace.mozilla.org>'
+# The audience of the JWT.
+MOZ_INAPP_AUD = 'firefox.marketplace.com'

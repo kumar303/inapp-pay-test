@@ -22,7 +22,7 @@ def home(request):
     exp = iat + 3600  # expires in 1 hour
     pay_request = json.dumps({
         'iss': settings.MOZ_APP_KEY,
-        'aud': 'marketplace.mozilla.org',
+        'aud': settings.MOZ_INAPP_AUD,
         'typ': 'mozilla/payments/pay/v1',
         'exp': exp,
         'iat': iat,
