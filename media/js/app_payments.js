@@ -11,7 +11,7 @@ $(function() {
     function waitForTransChange() {
         var state;
         $.ajax({
-            url: '/en-US/check-trans',
+            url: '/check-trans',
             dataType: 'json',
             type: 'GET',
             data: {tx: localTransID},
