@@ -1,0 +1,22 @@
+name: inapp-pay-test
+framework: python
+runtime: python27
+env:
+  DJANGO_SETTINGS_MODULE: inapp_pay_test.settings
+  PIP_OPTS: --no-deps --exists-action=w
+  PIP_REQUIREMENTS_FILE: requirements/prod.txt
+requirements:
+  pypm:
+    - m2crypto==0.21.1
+    - jinja2==2.6
+min_version:
+  client: 1.4.3
+#services:
+hooks:
+  post-staging:
+    - python manage.py syncdb --noinput
+ignores:
+  - .git
+  - inapp-pay-test.db
+#processes:
+#  web: $STACKATO_UWSGI --mount foo=wsgi/playdoh.wsgi
