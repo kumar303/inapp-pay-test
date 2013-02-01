@@ -127,7 +127,10 @@ SUPPORTED_NONLOCALES = [
 LOGGING = {'loggers': {'playdoh': {'level': logging.INFO,
                                    'handlers': ['console']},
                        'moz_inapp_pay': {'level': logging.DEBUG,
-                                         'handlers': ['console']}}}
+                                         'handlers': ['console']},
+                       # Root logger.
+                       '': {'level': logging.INFO,
+                            'handlers': ['console']}}}
 
 # URL to the JS file for the app to include to make in-app payments.
 # By default this is the local reference implementation.
