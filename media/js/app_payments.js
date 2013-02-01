@@ -8,17 +8,6 @@ $(function() {
         $log.show().html($log.html() + msg.toString() + "<br>");
     }
 
-    function onBuySuccess() {
-        log('navigator.mozPay() success!');
-        log('watching for a postback/chargeback...');
-        waitForTransChange();
-    }
-
-    function onBuyError() {
-        log('navigator.mozPay() error!');
-        $('#call-buy').removeClass('ajax-loading');
-    }
-
     function waitForTransChange() {
         var state;
         $.ajax({
@@ -48,6 +37,8 @@ $(function() {
                     log('new transaction state: ' + state);
                 }
                 setTimeout(waitForTransChange, 5000);
+                // We can still continue to wait because a
+                // chargeback might arrive.
                 // $('#call-buy').removeClass('ajax-loading');
             },
             error: function(xhr, textStatus, errorThrown) {
@@ -69,8 +60,20 @@ $(function() {
             data: $('#generator form').serialize(),
             success: function(data) {
                 localTransID = data.localTransID;
-                log('navigator.mozPay("' + data.signedRequest + '", onBuySuccess, onBuyError);');
-                navigator.mozPay(data.signedRequest, onBuySuccess, onBuyError);
+                log('navigator.mozPay(["' + data.signedRequest + '"]);');
+
+                // Let the magic happen.
+                var req = navigator.mozPay([data.signedRequest]);
+                req.onsuccess = function() {
+                    log('navigator.mozPay() success!');
+                    log('watching for a postback/chargeback...');
+                    waitForTransChange();
+                };
+                req.onerror = function() {
+                    log('navigator.mozPay() error: ' + this.error.name);
+                    $('#call-buy').removeClass('ajax-loading');
+                }
+
             },
             error: function(xhr, textStatus, errorThrown) {
                 console.log('ERROR', xhr, textStatus, errorThrown);
