@@ -11,6 +11,10 @@ urlpatterns = patterns('',
         name='app_payments.sign_request'),
     url(r'^manifest\.webapp$', views.manifest, name='app_payments.manifest'),
     url(r'^check-trans$', views.check_trans, name='app.check_trans'),
+    url(r'^settings$', views.show_settings,
+        name='app.show_settings'),
+
+    # Moz in-app payment postbacks:
     url(r'^postback$', moz_views.postback,
         name='app.mozmarket_postback'),
     url(r'^chargeback$', moz_views.chargeback,

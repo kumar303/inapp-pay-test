@@ -1,8 +1,10 @@
 import calendar
 import json
+import pprint
 import time
 import uuid
 
+from django import http
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, get_object_or_404
@@ -97,3 +99,11 @@ def check_trans(request):
     return {'localTransID': trans.pk,
             'mozTransactionID': trans.moz_transaction_id,
             'transState': trans.state}
+
+
+def show_settings(request):
+    whitelist = ('LOGGING',)
+    vals = [(k, getattr(settings, k)) for k in dir(settings)
+            if k in whitelist]
+    return http.HttpResponse(pprint.pformat(dict(vals)),
+                             content_type='text/plain')
