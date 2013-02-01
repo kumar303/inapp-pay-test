@@ -2,6 +2,9 @@ from django.conf.urls.defaults import *
 
 from moz_inapp_pay.djangoapp import views as moz_views
 
+from funfactory.monkeypatches import patch
+patch()
+
 from . import views
 
 
