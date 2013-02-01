@@ -52,7 +52,7 @@ def _change_trans_state(request, data, state):
         moz_trans_id = data['response']['transactionID']
 
         # e.g. transaction_id=1234
-        pd = urlparse.parse_qs(data['request']['productdata'])
+        pd = urlparse.parse_qs(data['request']['productData'])
         trans = Transaction.objects.get(pk=pd['transaction_id'][0])
         trans.moz_transaction_id = moz_trans_id
         log.info('transaction %s changed from state %s to %s'
