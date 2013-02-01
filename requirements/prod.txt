@@ -14,7 +14,7 @@ GitPython==0.1.7
 jingo==0.4
 kombu==2.1.2
 mock==1.0b1
-moz_inapp_pay==1.0.2
+moz_inapp_pay==1.0.3
 nose==1.2.1
 ordereddict==1.1
 django-picklefield==0.2.1
