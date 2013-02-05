@@ -3,7 +3,7 @@ framework: python
 runtime: python27
 env:
   DJANGO_SETTINGS_MODULE: inapp_pay_test.settings
-  PIP_OPTS: --no-deps --exists-action=w
+  PIP_OPTS: --no-deps
   PIP_REQUIREMENTS_FILE: requirements/prod.txt
 requirements:
   pypm:
