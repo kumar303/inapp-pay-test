@@ -1,8 +1,9 @@
 # This is your project's main settings file that can be committed to your
 # repo. If you need to override a setting locally, use settings_local.py
 
-from funfactory.settings_base import *
+import json
 import os
+from funfactory.settings_base import *
 
 DATABASES = {
     'default': {
@@ -18,8 +19,18 @@ DATABASES = {
     },
 }
 
+if os.environ.get('VCAP_APPLICATION'):
+    VCAP_APP = json.loads(os.environ['VCAP_APPLICATION'])
+else:
+    VCAP_APP = None
+
+# True if we running as a Stackato instance.
+STACKATO = bool(VCAP_APP)
+
 # This must match what you see in your URL bar when you run the website.
-SITE_URL = 'http://localhost:8000'
+# TODO(Kumar): check for https?
+SITE_URL = ('http://%s' % VCAP_APP['uris'][0] if VCAP_APP
+            else 'http://localhost:8000')
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
@@ -149,3 +160,10 @@ MOZ_APP_KEY = '<from marketplace.mozilla.org>'
 MOZ_APP_SECRET = '<from marketplace.mozilla.org>'
 # The audience of the JWT.
 MOZ_INAPP_AUD = 'firefox.marketplace.com'
+
+if STACKATO:
+    # Currently, Mozilla's Stackato only has a self-signed https cert.
+    # TODO: fix this when we have https support.
+    SESSION_COOKIE_SECURE = False
+    # TODO: remove this when we have a way to see exceptions on Stackato.
+    DEBUG = TEMPLATE_DEBUG = True
