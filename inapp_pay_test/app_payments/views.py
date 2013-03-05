@@ -26,7 +26,7 @@ def home(request):
     pay_request = json.dumps({
         'iss': settings.MOZ_APP_KEY,
         'aud': settings.MOZ_INAPP_AUD,
-        'typ': 'mozilla/payments/pay/v1',
+        'typ': settings.MOZ_INAPP_TYP,
         'exp': exp,
         'iat': iat,
         'request': {

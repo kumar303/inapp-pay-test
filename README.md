@@ -61,6 +61,20 @@ To use the JS shim hosted on a development install of the marketplace, set this:
 
     INAPP_PAYMENTS_JS = 'http://localhost:8001/mozmarket.js'
 
+For local use you might want to set the audience and type:
+
+    MOZ_INAPP_AUD = 'localhost'
+    MOZ_INAPP_TYP = 'mozilla-local/payments/pay/v1'
+
+Create database
+===============
+
+Create a database and set this in the settings file. Out of the box, it should
+just work with SQLLite:
+
+  python ./manage.py syncdb
+
+
 Deployment
 ==========
 
