@@ -160,6 +160,7 @@ MOZ_APP_KEY = '<from marketplace.mozilla.org>'
 MOZ_APP_SECRET = '<from marketplace.mozilla.org>'
 # The audience of the JWT.
 MOZ_INAPP_AUD = 'firefox.marketplace.com'
+MOZ_INAPP_TYP = 'mozilla/payments/pay/v1'
 
 if STACKATO:
     # Currently, Mozilla's Stackato only has a self-signed https cert.
