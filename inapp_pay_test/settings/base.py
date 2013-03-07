@@ -84,7 +84,7 @@ INSTALLED_APPS = list(INSTALLED_APPS) + [
     # Application base, containing global templates.
     'inapp_pay_test.base',
     'inapp_pay_test.app_payments',
-    'moz_inapp_pay.djangoapp',
+    'mozpay.djangoapp',
 
     'django.contrib.admin',
 ]
@@ -137,9 +137,9 @@ SUPPORTED_NONLOCALES = [
 
 LOGGING = {'loggers': {'playdoh': {'level': logging.INFO,
                                    'handlers': ['console']},
-                       'moz_inapp_pay': {'level': logging.DEBUG,
-                                         'handlers': ['console'],
-                                         'propagate': True},
+                       'mozpay': {'level': logging.DEBUG,
+                                  'handlers': ['console'],
+                                  'propagate': True},
                        # Root logger.
                        '': {'level': logging.INFO,
                             'handlers': ['console']}}}
