@@ -1,9 +1,10 @@
 $(function() {
+    console.log('app_payment.js is loading');
     'use strict';
     var localTransID, lastTransState;
 
     function log(msg) {
-        // console.log(msg);
+        console.log(msg);
         var $log = $("#log pre");
         $log.show().html($log.html() + msg.toString() + "<br>");
     }
@@ -63,6 +64,7 @@ $(function() {
                 log('navigator.mozPay(["' + data.signedRequest + '"]);');
 
                 // Let the magic happen.
+                log('Calling navigator.mozPay()');
                 var req = navigator.mozPay([data.signedRequest]);
                 req.onsuccess = function() {
                     log('navigator.mozPay() success!');
