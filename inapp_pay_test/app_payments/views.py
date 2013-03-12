@@ -23,7 +23,7 @@ log = commonware.log.getLogger()
 def home(request):
     iat = calendar.timegm(time.gmtime())
     exp = iat + 3600  # expires in 1 hour
-    pay_request = json.dumps({
+    req = {
         'iss': settings.MOZ_APP_KEY,
         'aud': settings.MOZ_INAPP_AUD,
         'typ': settings.MOZ_INAPP_TYP,
@@ -38,7 +38,10 @@ def home(request):
             'chargebackURL': '<this is not editable>',
             'postbackURL': '<this is not editable>'
         }
-    }, indent=2)
+    }
+    if settings.SIMULATE:
+        req['request']['simulate'] = settings.SIMULATE
+    pay_request = json.dumps(req, indent=2)
     return render(request, 'app_payments/home.html',
                   {'pay_request': pay_request})
 

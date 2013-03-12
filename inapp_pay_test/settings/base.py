@@ -168,3 +168,8 @@ if STACKATO:
     SESSION_COOKIE_SECURE = False
     # TODO: remove this when we have a way to see exceptions on Stackato.
     DEBUG = TEMPLATE_DEBUG = True
+
+# You can set this to a valid simulation value to make the JWT
+# do a simulation by default. For example:
+# SIMULATE = {'result': 'postback'}
+SIMULATE = None
