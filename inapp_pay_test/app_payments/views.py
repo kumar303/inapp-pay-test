@@ -32,8 +32,14 @@ def home(request):
         'request': {
             'pricePoint': 1,
             'id': str(uuid.uuid4()),
-            'name': 'The Product',
-            'description': 'detailed description',
+            'name': 'Virtual Kiwi',
+            'icons': {
+                '32': absolutify(settings.MEDIA_URL + 'img/kiwi_32.png'),
+                '48': absolutify(settings.MEDIA_URL + 'img/kiwi_48.png'),
+                '64': absolutify(settings.MEDIA_URL + 'img/kiwi_64.png'),
+                '128': absolutify(settings.MEDIA_URL + 'img/kiwi_128.png'),
+            },
+            'description': 'the most delicious fruit on the Internet',
             'productData': '<this is not editable>',
             'chargebackURL': '<this is not editable>',
             'postbackURL': '<this is not editable>'
