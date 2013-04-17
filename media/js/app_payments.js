@@ -57,6 +57,7 @@ $(function() {
         $.ajax({
             url: $('body').data('sign-url'),
             dataType: 'json',
+            cache: false,  // prevent JWT from expiring.
             type: 'POST',
             data: $('#generator form').serialize(),
             success: function(data) {
