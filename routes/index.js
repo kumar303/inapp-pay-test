@@ -59,6 +59,9 @@ module.exports = function(app, config) {
     jwtReq.request.postbackURL = config.postbackURL('postback');
     jwtReq.request.chargebackURL = config.postbackURL('chargeback');
 
+    // WARNING:
+    // In a real app you would *never* sign a JSON Web Token
+    // that came entirely from user input (such as this textarea form).
     res.send({transID: transID,
               jwt: jwt.encode(jwtReq, config.mozPaySecret, 'HS256')});
   });
