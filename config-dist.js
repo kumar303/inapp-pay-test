@@ -1,6 +1,7 @@
 module.exports = function(config) {
   // When not null, simulate this result instead of making a real purchase.
   config.simulate = {result: 'postback'};
+  config.sessionSecret = 'set-this-to-something';
 
   // Basic support for Stackato PAAS.
   var isStackato = !!process.env.VCAP_APPLICATION;

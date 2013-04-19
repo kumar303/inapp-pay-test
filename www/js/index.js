@@ -81,6 +81,41 @@
     $('#toggle').text('Show log');
   }
 
+  function watch() {
+    navigator.id.watch({
+      onlogin: function(assertion) {
+        $.post('/persona/verify', {assertion: assertion})
+          .done(function(data, textStatus, jqXHR) {
+            console.log('got verification');
+            if (data && data.status === "okay") {
+              console.log("You have been logged in as: " + data.email);
+              $('#signin').hide();
+              $('#signout button').text('Sign Out');
+              $('#signout').show();
+            }
+          })
+          .fail(function(jqXHR, textStatus, errorThrown) {
+            console.log('error verifying assertion:', textStatus, errorThrown);
+          });
+      },
+      onlogout: function() {
+        $.post('/persona/logout')
+          .done(function(data, textStatus, jqXHR) {
+            console.log('logged out');
+            $('#signout').hide();
+            $('#signin button').text('Sign In');
+            $('#signin').show();
+          })
+          .fail(function(jqXHR, textStatus, errorThrown) {
+            console.log('error logging out:', textStatus, errorThrown);
+          });
+      },
+      onready: function() {
+        $('#signin button').text('Sign In');
+      }
+    });
+  }
+
   function onReady() {
     refresh();
     $('#refresh').click(refresh);
@@ -103,6 +138,16 @@
       } else {
         showJWT();
       }
+    });
+
+    watch();
+
+    $('#signin button').on('click', function() {
+      navigator.id.request();
+    });
+
+    $('#signout button').on('click', function() {
+      navigator.id.logout();
     });
   }
 

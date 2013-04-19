@@ -20,6 +20,7 @@ var media = __dirname + '/www';
 var config = {
   host: '0.0.0.0',
   port: 3000,
+  sessionSecret: 'set-this-in-local-settings',
   mozPayKey: null,
   mozPaySecret: null,
   mozPayAudience: 'marketplace.firefox.com',
@@ -36,7 +37,7 @@ var config = {
     }
   },
   absURL: function(path) {
-    return 'http://' + this.extHost + this.addPort() + path;
+    return 'http://' + this.extHost + this.addPort() + (path || '');
   },
   postbackURL: function(path) {
      return this.absURL(this.mozPayRoutePrefix + '/' + path);
@@ -59,6 +60,14 @@ app.configure(function() {
   app.use(express.logger({format: 'dev'}));
   app.use(express.bodyParser());
   app.use(express.methodOverride());
+  app.use(express.cookieParser());
+  app.use(express.session({
+    secret: config.sessionSecret
+  }));
+});
+
+require("express-persona")(app, {
+  audience: config.absURL()
 });
 
 require('./routes')(app, config);

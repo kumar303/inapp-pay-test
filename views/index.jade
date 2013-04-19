@@ -12,10 +12,14 @@ html
     #app
       #error
       #jwt
+        div#signin
+          button Loading...
+        div#signout.hidden
+          button Loading...
         div
           button#refresh Refresh JWT
         #jwt-panel
-          textarea#jwt-text loading...
+          textarea#jwt-text Loading...
         #log.hidden
           ul
         div
@@ -28,3 +32,4 @@ html
 
     script(src='js/lib/jquery-1.9.1.min.js')
     script(src='js/index.js')
+    script(src='https://login.persona.org/include.js')
