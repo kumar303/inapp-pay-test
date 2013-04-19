@@ -1,104 +1,53 @@
-In-app Payment Tester
-=====================
+# In-app Payment Tester
 
 This is an [open web app](https://developer.mozilla.org/en/Apps)
 that implements Mozilla's
-[in-app payment API](https://developer.mozilla.org/en/Apps/In-app_payments).
+[navigator.mozPay() API](https://developer.mozilla.org/en/Apps/In-app_payments).
 It is used for diagnostics / testing in the Marketplace development cycle.
+
+## Run The App
+
+You can run the app from
+[http://inapp-pay-test.paas.allizom.org/](http://inapp-pay-test.paas.allizom.org/)
+to test in-app payments.
+
+## Customize It
+
+If you want to customize the settings (like your payment keys) you can run the
+app yourself almost as easily.
 
 Requirements:
 
-* Python 2.7 or greater
-* swig (to build m2crypto)
+* NodeJS >= 0.8
+* npm >= 1.1
 
-Installation:
+Clone the source and install:
 
     git clone git://github.com/kumar303/inapp-pay-test.git
     cd inapp-pay-test
-    virtualenv Env
-    source Env/bin/activate
-    pip install --no-deps --exists-action=w -r requirements/dev.txt
-    cp inapp_pay_test/settings/local.py-dist inapp_pay_test/settings/local.py
-    python manage.py syncdb
-    python manage.py runserver
+    npm install
+    cp config-dist.js config.js
 
+Edit `config.js` and enter your Application Key and Application Secret.
+Start the development server:
 
-In case you have trouble on Ubuntu with missing M2Crypto symbols, you may have
-to install it from your package manager and re-build the env like this:
+    npm start
 
-    sudo apt-get install python-m2crypto
-    rm -fr Env
-    virtualenv --system-site-packages Env
-    ./Env/bin/pip install -r requirements/compiled.txt
+View the app at [http://0.0.0.0:3000/](http://0.0.0.0:3000/)
+or install the manifest from
+[http://0.0.0.0:3000/manifest.webapp](http://0.0.0.0:3000/manifest.webapp).
 
-Configuration
-=============
+## Deployment
 
-To install the app, submit it to the Mozilla Marketplace (probably your local
-version). This is the manifest URL:
+You can deploy to Mozilla's Stackato PAAS if you have access.
+Edit the app name in `stackato.yml` so that it's unique across the cluster.
+Create a new app like this:
 
-    http://127.0.0.1:8000/manifest.webapp
+    stackato push
 
-Choose the option called "free app with in-app payments."
-You'll come to a screen where you can set up the postback and chargeback URLs.
+Make updates:
 
-Postback URL:
+    stackato update
 
-    /postback
-
-Chargeback URL:
-
-    /chargeback
-
-That will give you an application ID and an application secret.
-Enter those in your `inapp_pay_test/settings/local.py` config, which is not
-committed to git. Something like:
-
-    MOZ_APP_KEY = 'ZPLUZMDMUBIP9W687BWF'
-    MOZ_APP_SECRET = 'VpuV67JDd6Q6cvRhWMGW1K2ZHJSp0kicKs0gpF1qHVM'
-
-To use the JS shim hosted on a development install of the marketplace, set this:
-
-    INAPP_PAYMENTS_JS = 'http://localhost:8001/mozmarket.js'
-
-For local use you might want to set the audience and type:
-
-    MOZ_INAPP_AUD = 'localhost'
-    MOZ_INAPP_TYP = 'mozilla-local/payments/pay/v1'
-
-Create database
-===============
-
-Create a database and set this in the settings file. Out of the box, it should
-just work with SQLLite:
-
-  python ./manage.py syncdb
-
-
-Deployment
-==========
-
-Before deployment, you also need to run this:
-
-    python manage.py compress_assets
-
-
-To get your db set up in production, make sure the user of your web server
-(e.g. www-data) owns the *root directory* of your code, then run something
-like:
-
-    sudo -u www-data python ./manage.py syncdb
-
-Further Documentation
-=====================
-
-This app is built with [Playdoh](http://playdoh.readthedocs.org/),
-a [Django](https://docs.djangoproject.com/) starter kit.
-
-License
--------
-This software is licensed under the [New BSD License][BSD]. For more
-information, read the file ``LICENSE``.
-
-[BSD]: http://creativecommons.org/licenses/BSD/
-
+You may want to edit `config.js` to set different settings while running in
+Stackato.
