@@ -53,6 +53,7 @@
     showJWT();
     $.ajax({url: '/jwt-source', cache: false})
       .done(function(data, textStatus, jqXHR) {
+        console.log('refreshed JWT');
         $('#jwt-text').text(data);
       })
       .fail(function(jqXHR, textStatus, errorThrown) {
