@@ -32,7 +32,7 @@
     }
 
     $.ajax({url: '/pay', type: 'post', cache: false,
-            data: {jwt: $('#jwt-text').text()}})
+            data: {jwt: $('#jwt-panel textarea').text()}})
       .done(function(data, textStatus, jqXHR) {
         writeLog('calling navigator.mozPay()...');
         var req = navigator.mozPay([data.jwt]);
@@ -54,7 +54,12 @@
     $.ajax({url: '/jwt-source', cache: false})
       .done(function(data, textStatus, jqXHR) {
         console.log('refreshed JWT');
-        $('#jwt-text').text(data);
+        // Replace textare with brute force to prevent the browser from
+        // trying to preserve any edits.
+        $('#jwt-panel textarea').remove();
+        var tx = $('<textarea>Loading...</textarea>');
+        $('#jwt-panel').append(tx);
+        tx.text(data);
       })
       .fail(function(jqXHR, textStatus, errorThrown) {
         console.log('error getting catalog:', textStatus, errorThrown);
