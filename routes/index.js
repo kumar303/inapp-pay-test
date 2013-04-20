@@ -54,6 +54,7 @@ module.exports = function(app, config) {
     var transID = uuid.v4();
     config.db[transID] = {state: 'pending', result: null};
     var jwtReq = JSON.parse(req.param('jwt'));
+    console.log('pay with:', jwtReq);
     // fill in non-editable fields.
     jwtReq.request.productData = qs.stringify({localTransID: transID}),
     jwtReq.request.postbackURL = config.postbackURL('postback');
