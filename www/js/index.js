@@ -31,8 +31,10 @@
         });
     }
 
+    var editedJWT = $('#jwt-panel textarea').text();
+    console.log('edited JWT:', editedJWT);
     $.ajax({url: '/pay', type: 'post', cache: false,
-            data: {jwt: $('#jwt-panel textarea').text()}})
+            data: {jwt: editedJWT}})
       .done(function(data, textStatus, jqXHR) {
         writeLog('calling navigator.mozPay()...');
         var req = navigator.mozPay([data.jwt]);
