@@ -5,6 +5,8 @@
  "launch_path": "/",
  "default_locale": "en",
  "icons": {
-   "512": "/img/icon_512.png"
+   "64": "/img/out-64.png",
+   "128": "/img/out-128.png",
+   "256": "/img/out-256.png"
   },
  "installs_allowed_from": ["*"]}
