@@ -1,7 +1,7 @@
 (function() {
   "use strict";
 
-  function pay(done) {
+  function pay(editedJWT, done) {
     clearLog();
     showLog();
     writeLog('signing JWT...');
@@ -31,7 +31,6 @@
         });
     }
 
-    var editedJWT = $('#jwt-panel textarea').text();
     console.log('edited JWT:', editedJWT);
     $.ajax({url: '/pay', type: 'post', cache: false,
             data: {jwt: editedJWT}})
@@ -60,6 +59,8 @@
         // trying to preserve any edits.
         $('#jwt-panel textarea').remove();
         var tx = $('<textarea>Loading...</textarea>');
+        var id = Math.floor((Math.random() * 100) + 1);  // number between 1-100
+        tx.attr('name', 'jwt' + id.toString());
         $('#jwt-panel').append(tx);
         tx.text(data);
       })
@@ -75,6 +76,7 @@
   }
 
   function writeLog(msg) {
+    console.log(msg);
     var li = $('<li>' + msg + '</li>');
     $('#log ul').append(li);
   }
@@ -128,8 +130,9 @@
     refresh();
     $('#refresh').click(refresh);
 
-    $('#pay').on('click', function() {
-      pay(function(error, result) {
+    $('form#jwt-input').on('submit', function(evt) {
+      evt.preventDefault();
+      pay($(this).serializeArray()[0].value /* textarea value */, function(error, result) {
         if (error) {
           writeLog('error: ' + error);
           console.log('error with pay():', error);

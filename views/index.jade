@@ -18,13 +18,14 @@ html
           button Loading...
         div
           button#refresh Refresh JWT
-        #jwt-panel
-          textarea Loading...
         #log.hidden
           ul
-        div
-          button#pay Pay
-          button#toggle Show log
+        form#jwt-input
+          #jwt-panel
+            textarea Loading...
+          div
+            button#pay(type='submit') Pay
+            button#toggle(type='button') Show log
 
     #footer
       a(href='http://github.com/kumar303/inapp-pay-test',
