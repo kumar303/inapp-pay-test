@@ -13,6 +13,13 @@ module.exports = function(config) {
     config.mozPayType = 'mozilla/payments/pay/v1';
     config.mozPayKey = '...';
     config.mozPaySecret = '...';
+    // Stage
+    /*
+    config.mozPayAudience = 'marketplace.allizom.org';
+    config.mozPayType = 'mozilla-stage/payments/pay/v1';
+    config.mozPayKey = '...';
+    config.mozPaySecret = '...';
+    */
     // Dev
     /*
     config.mozPayAudience = 'marketplace-dev.allizom.org';
