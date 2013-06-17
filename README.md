@@ -9,7 +9,8 @@ It is used for diagnostics / testing in the Marketplace development cycle.
 
 You can run the app from
 [http://inapp-pay-test.paas.allizom.org/](http://inapp-pay-test.paas.allizom.org/)
-to test in-app payments.
+to test in-app payments. Here is a [shortcut](http://apploa.de/49d47) to install
+the app on device.
 
 ## Customize It
 
