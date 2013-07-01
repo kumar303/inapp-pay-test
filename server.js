@@ -21,6 +21,8 @@ var config = {
   host: '0.0.0.0',
   port: 3000,
   sessionSecret: 'set-this-in-local-settings',
+  // If you use HTTPS with a valid cert, set this to true.
+  isSecure: false,
   mozPayKey: null,
   mozPaySecret: null,
   mozPayAudience: 'marketplace.firefox.com',
@@ -37,7 +39,7 @@ var config = {
     }
   },
   absURL: function(path) {
-    return 'http://' + this.extHost + this.addPort() + (path || '');
+    return 'http' + (config.isSecure ? 's': '') + '://' + this.extHost + this.addPort() + (path || '');
   },
   postbackURL: function(path) {
      return this.absURL(this.mozPayRoutePrefix + '/' + path);
