@@ -31,7 +31,14 @@ module.exports = function(app, config) {
         },
         'productData': '<this is not editable>',
         'chargebackURL': '<this is not editable>',
-        'postbackURL': '<this is not editable>'
+        'postbackURL': '<this is not editable>',
+        'defaultLocale': 'en',
+        'locales': {
+          'pl': {
+            'name': 'Wirtualna Kiwi',
+            'description': 'Zakazany owoc'
+          }
+        }
       }
     };
     if (config.simulate) {
