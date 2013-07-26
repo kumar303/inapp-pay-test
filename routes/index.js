@@ -19,7 +19,7 @@ module.exports = function(app, config) {
       iat: pay.now(),
       exp: pay.now() + 3600,  // in 1hr
       request: {
-        pricePoint: 1,
+        pricePoint: 10,
         id: uuid.v4(),
         name: 'Virtual Kiwi',
         description: 'The forbidden fruit',
