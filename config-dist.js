@@ -7,31 +7,40 @@ module.exports = function(config) {
   var isStackato = !!process.env.VCAP_APPLICATION;
 
   // Get payment keys from the Firefox Marketplace DevHub.
+  config.servers = [
+    {name: 'marketplace.firefox.com (prod)',
+     mozPayAudience: 'marketplace.firefox.com',
+     mozPayType: 'mozilla/payments/pay/v1',
+     mozPayKey: '...',
+     mozPaySecret: '...'},
+    {name: 'marketplace.firefox.com (prod, simulate only)',
+     simulate: {result: 'postback'},
+     mozPayAudience: 'marketplace.firefox.com',
+     mozPayType: 'mozilla/payments/pay/v1',
+     mozPayKey: '...',
+     mozPaySecret: '...'},
+    {name: 'marketplace.allizom.org (stage)',
+     mozPayAudience: 'marketplace.allizom.org',
+     mozPayType: 'mozilla-stage/payments/pay/v1',
+     mozPayKey: '...',
+     mozPaySecret: '...'},
+    {name: 'marketplace-dev.allizom.org (dev)',
+     mozPayAudience: 'marketplace-dev.allizom.org',
+     mozPayType: 'mozilla-dev/payments/pay/v1',
+     mozPayKey: '...',
+     mozPaySecret: '...'},
+  ];
+
   if (isStackato) {
-    // Production
-    config.mozPayAudience = 'marketplace.firefox.com';
-    config.mozPayType = 'mozilla/payments/pay/v1';
-    config.mozPayKey = '...';
-    config.mozPaySecret = '...';
-    // Stage
-    /*
-    config.mozPayAudience = 'marketplace.allizom.org';
-    config.mozPayType = 'mozilla-stage/payments/pay/v1';
-    config.mozPayKey = '...';
-    config.mozPaySecret = '...';
-    */
-    // Dev
-    /*
-    config.mozPayAudience = 'marketplace-dev.allizom.org';
-    config.mozPayType = 'mozilla-dev/payments/pay/v1';
-    config.mozPayKey = '...';
-    config.mozPaySecret = '...';
-    */
+    config.isSecure = true;
   } else {
-    config.mozPayAudience = 'localhost';
-    config.mozPayType = 'mozilla-local/payments/pay/v1';
-    config.mozPayKey = '...';
-    config.mozPaySecret = '...';
+    config.servers.push({
+      name: 'fireplace.local',
+      mozPayAudience: 'localhost',
+      mozPayType: 'mozilla-local/payments/pay/v1',
+      mozPayKey: '...',
+      mozPaySecret: '...'
+    });
   }
 
   var app = isStackato

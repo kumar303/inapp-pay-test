@@ -3,7 +3,10 @@ var qs = require('qs');
 
 module.exports = function(app, config) {
 
-  pay.routes(app, config);
+  // Whoops! This needs to happen first but we really
+  // want to configure this dynamically. See routes/index.js
+  pay.configure(config.servers[0]);
+  pay.routes(app);
 
   function processData(data, done) {
     var transID = qs.parse(data.request.productData).localTransID;

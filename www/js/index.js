@@ -1,7 +1,35 @@
 (function() {
   "use strict";
 
-  function pay(editedJWT, done) {
+  $.fn.serializeObject = function() {
+    /* returns a JS object */
+    var o = {};
+    var a = this.serializeArray();
+    $.each(a, function() {
+      if (o[this.name] !== undefined) {
+        if (!o[this.name].push) {
+            o[this.name] = [o[this.name]];
+        }
+        o[this.name].push(this.value || '');
+      } else {
+        o[this.name] = this.value || '';
+      }
+    });
+    return o;
+  };
+
+  function pay(form, done) {
+    var editedJWT;
+    // This is stupid. The textarea name attribute has a cache buster thing.
+    for (var key in form) {
+      if (key.slice(0, 3) == 'jwt') {
+        editedJWT = form[key];
+      }
+    }
+    if (!editedJWT) {
+      console.error('could not get editedJWT');
+    }
+    console.log('jwt', editedJWT, 'server', form.server);
     clearLog();
     showLog();
     writeLog('signing JWT...');
@@ -33,7 +61,7 @@
 
     console.log('edited JWT:', editedJWT);
     $.ajax({url: '/pay', type: 'post', cache: false,
-            data: {jwt: editedJWT}})
+            data: {jwt: editedJWT, server: form.server}})
       .done(function(data, textStatus, jqXHR) {
         writeLog('calling navigator.mozPay()...');
         var req = navigator.mozPay([data.jwt]);
@@ -52,10 +80,11 @@
 
   function refresh() {
     showJWT();
-    $.ajax({url: '/jwt-source', cache: false})
+    $.ajax({url: '/jwt-source', cache: false,
+            data: {server: $('select#server').val()}})
       .done(function(data, textStatus, jqXHR) {
         console.log('refreshed JWT');
-        // Replace textare with brute force to prevent the browser from
+        // Replace textarea with brute force to prevent the browser from
         // trying to preserve any edits.
         $('#jwt-panel textarea').remove();
         var tx = $('<textarea>Loading...</textarea>');
@@ -129,10 +158,11 @@
   function onReady() {
     refresh();
     $('#refresh').click(refresh);
+    $('select#server').on('change', refresh);
 
     $('form#jwt-input').on('submit', function(evt) {
       evt.preventDefault();
-      pay($(this).serializeArray()[0].value /* textarea value */, function(error, result) {
+      pay($(this).serializeObject(), function(error, result) {
         if (error) {
           writeLog('error: ' + error);
           console.log('error with pay():', error);

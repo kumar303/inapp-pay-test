@@ -57,6 +57,13 @@ button {
     cursor: pointer;
 }
 
+select {
+    width: 100%;
+    font-size: 1.2em;
+    padding: 0.5em;
+    margin: 5px 0;
+}
+
 #app {
     margin: 0;
     padding: 4px;

@@ -10,22 +10,26 @@ html
 
   body
     #app
-      div #{config.mozPayAudience}
-      #error
-      #jwt
-        //- temporarily disabling sign-in
-        //
-          div#signin
-            button Loading...
-          div#signout.hidden
-            button Loading...
-        div
-          button#refresh Refresh JWT
-        #log.hidden
-          ul
-        form#jwt-input
+      form#jwt-input
+        select(name='server', id='server')
+          each serv, index in config.servers
+            option(value=index) #{serv.name}
+
+        #error
+        #jwt
+          //- temporarily disabling sign-in
+          //
+            div#signin
+              button Loading...
+            div#signout.hidden
+              button Loading...
+          div
+            button#refresh Refresh JWT
+          #log.hidden
+            ul
           #jwt-panel
-            textarea Loading...
+            // Warning: this textarea tag gets replaced in www/js/index.js
+            textarea(name='jwt') Loading...
           div
             button#pay(type='submit') Pay
             button#toggle(type='button') Show log

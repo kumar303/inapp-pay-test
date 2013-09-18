@@ -23,13 +23,11 @@ var config = {
   sessionSecret: 'set-this-in-local-settings',
   // If you use HTTPS with a valid cert, set this to true.
   isSecure: false,
-  mozPayKey: null,
-  mozPaySecret: null,
-  mozPayAudience: 'marketplace.firefox.com',
-  mozPayType: 'mozilla/payments/pay/v1',
   mozPayRoutePrefix: '/mozpay',
   // When not null, simulate this result instead of making a real purchase.
   simulate: null,
+  // A list of servers to use and their corresponding values. See config-dist.js for an example.
+  servers: [],
 
   addPort: function() {
     if (this.extPort) {
