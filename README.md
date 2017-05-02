@@ -1,5 +1,7 @@
 # In-app Payment Tester
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/kumar303/inapp-pay-test.svg)](https://greenkeeper.io/)
+
 This is an [open web app](https://developer.mozilla.org/en/Apps)
 that implements Mozilla's
 [navigator.mozPay() API](https://developer.mozilla.org/en/Apps/In-app_payments).
